@@ -33,6 +33,12 @@ const Menu = () => {
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
   const vegItems = menuItems.filter(item => item.isVeg);
   const nonVegItems = menuItems.filter(item => !item.isVeg);
+  const mainCourses = menuItems.filter(item => item.type === 'main-course');
+  const snacks = menuItems.filter(item => item.type === 'snacks');
+  const beverages = menuItems.filter(item => item.type === 'beverages');
+  const desserts = menuItems.filter(item => item.type === 'desserts');
+
+  const cuisines = Array.from(new Set(menuItems.map(item => item.cuisine)));
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -74,35 +80,72 @@ const Menu = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
           <h2 className="text-3xl font-bold mb-2">Our Menu</h2>
-          <p className="text-muted-foreground">Choose from our delicious selection</p>
+          <p className="text-muted-foreground">Choose from 200+ items across cuisines</p>
         </div>
 
         <Tabs defaultValue="all" className="w-full">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-8">
-            <TabsTrigger value="all">All Items</TabsTrigger>
-            <TabsTrigger value="veg">Veg</TabsTrigger>
-            <TabsTrigger value="non-veg">Non-Veg</TabsTrigger>
+          <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-6 mb-8">
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="main-course">Main Course</TabsTrigger>
+            <TabsTrigger value="snacks">Snacks</TabsTrigger>
+            <TabsTrigger value="beverages">Beverages</TabsTrigger>
+            <TabsTrigger value="desserts">Desserts</TabsTrigger>
+            <TabsTrigger value="veg">Veg Only</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-4">Browse by Cuisine</h3>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {cuisines.map((cuisine) => (
+                  <Badge key={cuisine} variant="outline" className="text-sm px-3 py-1">
+                    {cuisine}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {menuItems.map((item) => (
                 <FoodCard key={item.id} item={item} />
               ))}
             </div>
           </TabsContent>
 
-          <TabsContent value="veg">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {vegItems.map((item) => (
+          <TabsContent value="main-course">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {mainCourses.map((item) => (
                 <FoodCard key={item.id} item={item} />
               ))}
             </div>
           </TabsContent>
 
-          <TabsContent value="non-veg">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {nonVegItems.map((item) => (
+          <TabsContent value="snacks">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {snacks.map((item) => (
+                <FoodCard key={item.id} item={item} />
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="beverages">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {beverages.map((item) => (
+                <FoodCard key={item.id} item={item} />
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="desserts">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {desserts.map((item) => (
+                <FoodCard key={item.id} item={item} />
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="veg">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {vegItems.map((item) => (
                 <FoodCard key={item.id} item={item} />
               ))}
             </div>

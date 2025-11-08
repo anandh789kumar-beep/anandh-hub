@@ -33,9 +33,15 @@ const FoodCard = ({ item }: FoodCardProps) => {
         )}
       </div>
       <CardContent className="p-4">
-        <h3 className="font-semibold text-lg mb-1">{item.name}</h3>
-        <p className="text-sm text-muted-foreground mb-2">{item.description}</p>
-        <p className="text-2xl font-bold text-primary">₹{item.price}</p>
+        <div className="mb-2">
+          <Badge variant="outline" className="text-xs">{item.cuisine}</Badge>
+        </div>
+        <h3 className="font-semibold text-base mb-1">{item.name}</h3>
+        <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.description}</p>
+        <div className="flex items-center justify-between">
+          <p className="text-xl font-bold text-primary">₹{item.price}</p>
+          <p className="text-xs text-muted-foreground">⏱ {item.prepTime} min</p>
+        </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <Button 

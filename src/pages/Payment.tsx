@@ -28,16 +28,26 @@ const Payment = () => {
   const totalAmount = Math.round(getTotal() * 1.05);
 
   const handlePayment = () => {
-    // In a real app, this would integrate with payment gateway
+    const maxPrepTime = Math.max(...cart.map(item => item.prepTime));
+    const estimatedTime = maxPrepTime + 5;
+
+    const order = {
+      id: `ORD${Date.now()}`,
+      items: cart,
+      total: totalAmount,
+      paymentMethod: paymentMethods.find(m => m.id === selectedMethod)?.name || selectedMethod,
+      timestamp: new Date(),
+      estimatedTime,
+      status: 'pending' as const
+    };
+
     toast({
-      title: "Processing payment...",
-      description: "Please wait while we confirm your payment",
+      title: "Payment successful",
+      description: `Payment of ₹${totalAmount} processed`,
     });
 
-    setTimeout(() => {
-      clearCart();
-      navigate('/order-success');
-    }, 2000);
+    clearCart();
+    navigate('/order-success', { state: { order } });
   };
 
   return (

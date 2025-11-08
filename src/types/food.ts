@@ -6,6 +6,9 @@ export interface FoodItem {
   image: string;
   category: 'veg' | 'non-veg';
   isVeg: boolean;
+  type: 'main-course' | 'snacks' | 'beverages' | 'desserts';
+  cuisine: string;
+  prepTime: number; // in minutes
 }
 
 export interface CartItem extends FoodItem {
@@ -18,4 +21,6 @@ export interface Order {
   total: number;
   paymentMethod: string;
   timestamp: Date;
+  estimatedTime: number; // in minutes
+  status: 'pending' | 'preparing' | 'ready' | 'delivered';
 }
