@@ -51,7 +51,7 @@ const Menu = () => {
                 <UtensilsCrossed className="w-5 h-5 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-xl font-bold">MEC CLG</h1>
+                <h1 className="text-xl font-bold">MEC CANCRICK</h1>
                 <p className="text-sm text-muted-foreground">Welcome, {username}!</p>
               </div>
             </div>
@@ -80,7 +80,7 @@ const Menu = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
           <h2 className="text-3xl font-bold mb-2">Our Menu</h2>
-          <p className="text-muted-foreground">Choose from 200+ items across cuisines</p>
+          <p className="text-muted-foreground">Choose from 15 carefully selected items</p>
         </div>
 
         <Tabs defaultValue="all" className="w-full">

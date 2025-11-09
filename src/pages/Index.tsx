@@ -29,10 +29,10 @@ const Index = () => {
         {/* Main heading */}
         <div className="text-center mb-12 space-y-4 animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
           <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary via-primary to-secondary bg-clip-text text-transparent leading-tight">
-            MEC CLG Canteen
+            MEC CANCRICK
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Delicious meals, delivered fresh to your doorstep
+            Delicious meals from Indian & Chinese cuisine, delivered fresh
           </p>
         </div>
 
@@ -50,8 +50,8 @@ const Index = () => {
             <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <ShoppingBag className="w-6 h-6 text-secondary" />
             </div>
-            <h3 className="font-semibold text-lg mb-2">Wide Selection</h3>
-            <p className="text-sm text-muted-foreground">200+ items from around the world</p>
+            <h3 className="font-semibold text-lg mb-2">Curated Selection</h3>
+            <p className="text-sm text-muted-foreground">15 delicious items to choose from</p>
           </div>
 
           <div className="bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6 text-center hover:shadow-xl hover:scale-105 transition-all duration-300">
