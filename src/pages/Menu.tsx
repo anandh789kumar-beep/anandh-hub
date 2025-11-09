@@ -18,7 +18,7 @@ const Menu = () => {
     const storedUsername = localStorage.getItem('username');
     
     if (!isLoggedIn) {
-      navigate('/');
+      navigate('/login');
     } else {
       setUsername(storedUsername || 'Guest');
     }
