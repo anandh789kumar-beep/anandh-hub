@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { User } from '@supabase/supabase-js';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -7,26 +9,50 @@ import { ShoppingCart, LogOut, UtensilsCrossed } from 'lucide-react';
 import FoodCard from '@/components/FoodCard';
 import { menuItems } from '@/data/menuData';
 import { useCart } from '@/contexts/CartContext';
+import { useToast } from '@/hooks/use-toast';
 
 const Menu = () => {
   const navigate = useNavigate();
   const { cart } = useCart();
-  const [username, setUsername] = useState('');
+  const { toast } = useToast();
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    const storedUsername = localStorage.getItem('username');
-    
-    if (!isLoggedIn) {
-      navigate('/login');
-    } else {
-      setUsername(storedUsername || 'Guest');
-    }
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+        if (!session) {
+          navigate('/login');
+        }
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      if (!session) {
+        navigate('/login');
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('username');
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to logout. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
     navigate('/');
   };
 
@@ -52,7 +78,7 @@ const Menu = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold">MEC CANCRICK</h1>
-                <p className="text-sm text-muted-foreground">Welcome, {username}!</p>
+                <p className="text-sm text-muted-foreground">Welcome, {user?.email?.split('@')[0]}!</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
